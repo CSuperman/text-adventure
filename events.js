@@ -4,7 +4,8 @@ const events = {
     story: "As you explore a dimly lit cave, a glimmer catches your eye. You uncover a chest overflowing with ancient gold coins.",
     conditions: {
       location: "cave",
-      timeOfDay: "night"
+      timeOfDay: "night",
+      count: null,
     }
   },
   "unexpectedEncounter": {
@@ -12,7 +13,8 @@ const events = {
     story: "While crossing a dense forest, you stumble upon a lone figure cloaked in shadows. They offer you a cryptic message before vanishing into the woods.",
     conditions: {
       location: ["forest", "mountain"],
-      timeOfDay: "any"
+      timeOfDay: "any",
+      count: null,
     }
   },
   "suddenStorm": {
@@ -20,7 +22,8 @@ const events = {
     story: "A fierce storm erupts, unleashing its fury upon the land. You seek shelter as lightning strikes and thunder roars across the sky.",
     conditions: {
       location: "outdoors",
-      weather: "rain"
+      weather: "rain",
+      count: null,
     }
   },
 

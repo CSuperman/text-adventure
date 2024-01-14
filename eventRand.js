@@ -1,27 +1,68 @@
-function randomizeEvent(eventName) {
-  const event = events[eventName];
-  
+var events = {
+  "mysteriousTreasure": {
+    title: "A Gleaming Discovery",
+    story: "As you explore a dimly lit cave, a glimmer catches your eye. You uncover a chest overflowing with ancient gold coins.",
+    conditions: {
+      location: "forest",
+      timeOfDay: "day",
+      count: 0,
+    }
+  },
+  "somethingHappened": {
+    title: "A Thief in the Night",
+    story: "You fell asleep and someone stole from your ...",
+    conditions: {
+      location: "forest",
+      timeOfDay: "night",
+      count: 0,
+    }
+  },
+};
 
-  if (areConditionsMet(event.conditions)) {
+// MAIN FUNCTION
+function randomizeEvent() {
+  var eventName = Object.keys(events)[Math.floor(Math.random() * Object.keys(events).length)];
 
-    countToThree(eventName, 1);
+  if (areConditionsMet(events[eventName].conditions)) {
+    countToThree(eventName);
   }
 }
 
-function countToThree(eventName, count) {
-  // Execute event after counting to 3
-  if (count <= 3) {
-    console.log(`Count: ${count}`);
-    setTimeout(() => countToThree(eventName, count + 1), 1000); // Wait for 1 second
-  } else {
- 
-    console.log(`Event '${eventName}' triggered!`);
+function areConditionsMet(conditions) {
+  // Replace with your actual condition checking logic
+  const currentLocation = "forest";
+  const currentTimeOfDay = "day";
+  return conditions.location === currentLocation && conditions.timeOfDay === currentTimeOfDay;
+}
 
-    
+function countToThree(eventName) {
+  if (events[eventName].conditions.count <= 3) {
+    events[eventName].conditions.count++;
+    console.log(`Count: ${events[eventName].conditions.count}`);
 
-    events[eventName].conditions.count = null;
+  if (events[eventName].conditions.count === 3) {
+    const eventToAddBack = events[eventName];
+    delete events[eventName];
+    setTimeout(addEventBack, 5000, eventToAddBack);    }
+  else {
+      setTimeout(countToThree, 1000, eventName);
+    }
   }
 }
 
-// Example usage from events
-randomizeEvent("mysteriousTreasure");
+function addEventBack(eventToAdd) {
+  events[eventToAdd.eventName] = {
+    eventName: eventToAdd.eventName,
+    title: eventToAdd.title,
+    story: eventToAdd.story,
+    conditions: {
+      location: eventToAdd.conditions.location,
+      timeOfDay: eventToAdd.conditions.timeOfDay,
+      count: 0
+    }
+  };
+  console.log(`Event '${eventToAdd.eventName}' added back to events.`);
+}
+
+// Example usage
+randomizeEvent();

@@ -1,68 +1,67 @@
-var events = {
-  "mysteriousTreasure": {
-    title: "A Gleaming Discovery",
-    story: "As you explore a dimly lit cave, a glimmer catches your eye. You uncover a chest overflowing with ancient gold coins.",
-    conditions: {
-      location: "forest",
-      timeOfDay: "day",
-      count: 0,
-    }
-  },
-  "somethingHappened": {
-    title: "A Thief in the Night",
-    story: "You fell asleep and someone stole from your ...",
-    conditions: {
-      location: "forest",
-      timeOfDay: "night",
-      count: 0,
-    }
-  },
+const events = {
+ "mysteriousTreasure": {
+   title: "A Gleaming Discovery",
+   story: "As you explore a dimly lit cave, a glimmer catches your eye. You uncover a chest overflowing with ancient gold coins.",
+   conditions: {
+     location: "forest",
+     timeOfDay: "day",
+     count: 0,
+   }
+ },
+ "somethingHappened": {
+   title: "A Band of Thieves",
+   story: "You were distracted while taking a nap and your ... is missing",
+   conditions: {
+     location: "forest",
+     timeOfDay: "day",
+     count: 0,
+   }
+ },
 };
 
-// MAIN FUNCTION
-function randomizeEvent() {
-  var eventName = Object.keys(events)[Math.floor(Math.random() * Object.keys(events).length)];
+const currentLocation = "forest"; 
+const currentTimeOfDay = "night"; 
 
-  if (areConditionsMet(events[eventName].conditions)) {
-    countToThree(eventName);
-  }
-}
+function selectRandomEvent() {
+ const eligibleEvents = Object.values(events).filter(
+   (event) =>
+     event.conditions.location === currentLocation &&
+     event.conditions.timeOfDay === currentTimeOfDay &&
+     event.conditions.count <= 2
+ );
 
-function areConditionsMet(conditions) {
-  // Replace with your actual condition checking logic
-  const currentLocation = "forest";
-  const currentTimeOfDay = "day";
-  return conditions.location === currentLocation && conditions.timeOfDay === currentTimeOfDay;
-}
+  if (eligibleEvents.length === 0) {
+    // ... (handle no eligible events case)
 
-function countToThree(eventName) {
-  if (events[eventName].conditions.count <= 3) {
-    events[eventName].conditions.count++;
-    console.log(`Count: ${events[eventName].conditions.count}`);
+   console.log("No eligible events found.");
+   return;
 
-  if (events[eventName].conditions.count === 3) {
-    const eventToAddBack = events[eventName];
-    delete events[eventName];
-    setTimeout(addEventBack, 5000, eventToAddBack);    }
-  else {
-      setTimeout(countToThree, 1000, eventName);
+  } else {
+
+    for (let i = eligibleEvents.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [eligibleEvents[i], eligibleEvents[j]] = [eligibleEvents[j], eligibleEvents[i]];
     }
-  }
+
+    const chosenEvent = eligibleEvents[0];
+ }
+
+ var chosenEvent = eligibleEvents[Math.floor(Math.random() * eligibleEvents.length)];
+
+ console.log("Selected event:", chosenEvent.title);
+ console.log(chosenEvent.story);
+
+ chosenEvent.conditions.count++;
+ console.log(chosenEvent.conditions.count)
+
+
+ delete events[chosenEvent.id];
+
+
+ setTimeout(() => {
+   events[chosenEvent.id] = chosenEvent;
+ }, 5000);
+ console.log(events)
 }
 
-function addEventBack(eventToAdd) {
-  events[eventToAdd.eventName] = {
-    eventName: eventToAdd.eventName,
-    title: eventToAdd.title,
-    story: eventToAdd.story,
-    conditions: {
-      location: eventToAdd.conditions.location,
-      timeOfDay: eventToAdd.conditions.timeOfDay,
-      count: 0
-    }
-  };
-  console.log(`Event '${eventToAdd.eventName}' added back to events.`);
-}
-
-// Example usage
-randomizeEvent();
+selectRandomEvent();

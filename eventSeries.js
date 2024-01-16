@@ -13,7 +13,7 @@ class EventSeries {
     this.currentEventIndex++;
 
     if (this.currentEventIndex >= Object.keys(this.events).length) {
-      console.log("All events have been executed");
+      console.log("The end.");
       return;
     }
   }

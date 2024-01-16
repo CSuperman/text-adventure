@@ -1,4 +1,4 @@
-const NAME = "billybob joe"
+const name = "billybob joe"
 
 class EventSeries {
   constructor(events, name) {

@@ -1,6 +1,8 @@
 
 // requires html file to run
 
+// features: (1) custom event ordering, (2) pause / resume
+
 const name = "billybob joe"
 
 class EventSeries {
@@ -9,7 +11,7 @@ class EventSeries {
     this.currentEventIndex = 0;
     this.name = "billybob joe"
     this.isPaused = false;
-    this.sequence = []; // Array to define custom event order
+    this.sequence = []; // custom event order
   }
 
   setSequence(sequence) {
@@ -56,8 +58,7 @@ document.addEventListener("keydown", () => {
 });
 
 document.addEventListener("keyup", () => {
-  // Example: Pause on spacebar release
-  if (event.key === " ") {
+  if (event.key === " ") {  // space bar
     eventSeries.pause();
   }
 });

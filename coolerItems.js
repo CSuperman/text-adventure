@@ -1,4 +1,4 @@
-
+// exploring item features
 const craftableItems = {
   wolfFurArmor: {
     name: "Wolf Fur Armor",

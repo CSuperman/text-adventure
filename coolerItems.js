@@ -16,14 +16,14 @@ const craftableItems = {
       { name: "Berserk Rage", unlocked: false },
     ],
   },
-  // more items
+
 };
 
 
 
 
 function unlockItemTrait(item, trait) {
-=
+
   if (shouldUnlock(trait)) {
     item[trait.type].forEach((t) => (t.unlocked = true));
     console.log(`${trait.name} unlocked for ${item.name}!`);

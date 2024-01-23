@@ -7,12 +7,9 @@ class Food {
 }
 
 class Monster {
-  constructor(name, strength, agility, intelligence, health) {
+  constructor(name, stats = { strength: 0, agility: 0, intelligence: 0, health: 0 }) {
     this.name = name;
-    this.strength = strength;
-    this.agility = agility;
-    this.intelligence = intelligence;
-    this.health = health;
+    this.stats = stats;
     this.effects = [];
   }
 
@@ -21,7 +18,7 @@ class Monster {
     this.effects.push(food.sideEffect);
     console.log(`${this.name} eats the ${food.name}!`);
     console.log(`Stat boost: ${JSON.stringify(food.statBoost)}`);
-    console.log(`Side effect: ${food.sideEffect.toString()}`);
+    console.log(`Side effect: ${food.sideEffect.name}`);
   }
 
   dayEnd() {
@@ -31,18 +28,18 @@ class Monster {
 
   applyStatBoost(boost) {
     for (const [stat, value] of Object.entries(boost)) {
-      this[stat] += value;
+      this.stats[stat] += value;
     }
   }
 
   toString() {
-    return `${this.name} (S:${this.strength}, A:${this.agility}, I:${this.intelligence}, H:${this.health})`;
+    return `${this.name} (S:${this.stats.strength}, A:${this.stats.agility}, I:${this.stats.intelligence}, H:${this.stats.health})`;
   }
 }
 
 const foods = [
-  new Food("Eyeball Stew", { strength: 1 }, (monster) => console.log(`${monster.name} sees things...`)),
-  new Food("Slime Surprise", { agility: 1 }, (monster) => console.log(`${monster.name} is slippery! (Agility penalty)`)),
+  new Food("Eyeball Stew", { strength: 1 }, { name: "Hallucinations" }),
+  new Food("Slime Surprise", { agility: 1 }, { name: "Slippery (Agility penalty)" }),
   new Food("Brain Jello", { intelligence: 1 }, (monster) => console.log(`${monster.name} has a headache! (Intelligence penalty)`)),
   new Food("Glowing Goo", { health: 2 }, (monster) => console.log(`${monster.name} feels radioactive! (Health penalty)`)),
   new Food("Smooshed Grom", { strength: 2, agility: 2, health: 2 }, (monster) => console.log(`${monster.name} feels powerful`)),

@@ -17,6 +17,16 @@ const events = [
   },
 ]
 
+var events = [
+  {
+    id: 1,
+    name: "Encounter a goblin",
+    conditions: { environment: { timeOfDay: "night" }, identity: { playerLevel: 1 }, thing: { item: true } },
+    actions: [
+      { type: "combat", enemy: "goblin" },
+    ],
+  },
+]
 
 var gameState = {
   environment: {
@@ -25,15 +35,18 @@ var gameState = {
   identity: {
     playerLevel: 1, 
   },
+  thing: {
+    item: true, 
+  },
 };
 
-
 function triggerRandomEvent() {
-  var eligibleEvents = events.filter((event) => {
+  const eligibleEvents = events.filter((event) => {
     return Object.entries(event.conditions).every(
       ([category, conditionValues]) => {
+        const categoryState = gameState[category];
         return Object.entries(conditionValues).every(
-          ([key, value]) => gameState[category][key] === value
+          ([key, value]) => categoryState?.[key] === value
         );
       }
     );
@@ -51,51 +64,47 @@ function triggerRandomEvent() {
       switch (action.type) {
 
         case "combat":
-          startCombat(action.npc);
+          startCombat(action.enemy);
           break;
         case "dialogue":
           displayDialogue(action.text);
           break;
         case "item":
-          giveItem(action.npc, action.item);
+          giveItem(action.enemy, action.item);
           break;
         default:
           console.warn(`Unknown action type: ${action.type}`);
       }
     });
 
-    return true;
+    return true; 
   } else {
     return false;
   }
 }
 
-// testing 
-function startCombat(npc) {
-  console.log(`You are attacked by a ${npc}!`);
+function startCombat(enemy) {
+  console.log(`You are attacked by a ${enemy}!`);
 }
 
 function displayDialogue(text) {
   console.log(`${text}`);
 }
 
-function giveItem(npc, item) {
-  console.log(`${npc} gives you a magical ${item}!`);
+function giveItem(enemy, item) {
+  console.log(`${enemy} gives you a magical ${item}!`);
 }
-
 
 function gameLoop() {
 
-  // in this case it's always the other, obviously 1 of each
   console.log(gameState.environment.timeOfDay = gameState.environment.timeOfDay === "night" ? "day" : "night")
 
-  // do the same for LEVEL, etc
-
   if (true) {
-  	triggerRandomEvent()
+    triggerRandomEvent()
+
+    console.log("An event occurred!"); 
   }
   setTimeout(gameLoop, 1000 / 1);
 }
 
 gameLoop() // Start events loop
-

@@ -4,8 +4,8 @@ class MagicalGenieLamp {
     this.isDestroyed = true;
     this.repairItems = [];
     this.character = character;
-    this.character.x = 1  // random lost location
-    this.character.y = 1  // random lost location
+    this.character.x = 1  
+    this.character.y = 1 
   }
 
   grantWish(wish) {
@@ -42,8 +42,8 @@ class MagicalGenieLamp {
   revive() {
     if (!this.character.alive && this.wishesRemaining > 0) {
       this.character.health = 1;
-      this.character.x = 0  // random lost location
-      this.character.y = 0  // random lost location
+      this.character.x = Math.random() * (99 - 1) + 1 || 0  // random lost location
+      this.character.y = Math.random() * (99 - 1) + 1 || 0  // random lost location
       this.wishesRemaining = 1;
       console.log("The Magical Genie Lamp has revived you with 1 health!");
     } else if (!this.isDestroyed) {

@@ -30,7 +30,7 @@ setInterval(function() {
     if (Date.now() - lastFocusTime > 5000) { // Adjust timeout as needed
         exitSequence();
     }
-}, 1000);
+}, 3000);
 
 document.addEventListener('focus', function() {
     lastFocusTime = Date.now();
@@ -43,7 +43,29 @@ document.addEventListener('focus', function() {
 
 // SHOW HORROR MESSAGES
 
-document.body.textContent += horrifyingMessage.slice(0, messageIndex++);
+//document.body.textContent += horrifyingMessage.slice(0, messageIndex++);
+
+function slowHorrorMsg(horrorMsg) {
+  let currentWordIndex = 0;
+  const intervalId = setInterval(() => {
+    var nextWordEnd = horrorMsg.indexOf(" ", currentWordIndex);
+    if (nextWordEnd === -1) {
+      nextWordEnd = horrorMsg.length;
+    }
+    var nextWord = horrorMsg.slice(currentWordIndex, nextWordEnd);
+
+    process.stdout.write(nextWord);
+    currentWordIndex = nextWordEnd + 1;
+
+    if (currentWordIndex >= horrorMsg.length) {
+      clearInterval(intervalId);
+    }
+  }, 1333);
+}
+
+
+//slowHorrorMsg(horrorMsg)
+slowHorrorMsg("your time to die . . .")
 
 
 // SOUNDS

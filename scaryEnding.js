@@ -54,7 +54,7 @@ function slowHorrorMsg(horrorMsg) {
     }
     var nextWord = horrorMsg.slice(currentWordIndex, nextWordEnd);
 
-    process.stdout.write(nextWord);
+    process.stdout.write(nextWord + ' ');
     currentWordIndex = nextWordEnd + 1;
 
     if (currentWordIndex >= horrorMsg.length) {

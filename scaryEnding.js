@@ -45,8 +45,19 @@ document.addEventListener('focus', function() {
 
 //document.body.textContent += horrifyingMessage.slice(0, messageIndex++);
 
+
+
+* Slowly displays a message word by word.
+ *
+ * @param {string} horrorMsg
+ * @param {number} [intervalTime=100] - The time between presented words.
+ */
+l
+
 function slowHorrorMsg(horrorMsg) {
   let currentWordIndex = 0;
+  let intervalTime = 1333;
+    
   const intervalId = setInterval(() => {
     var nextWordEnd = horrorMsg.indexOf(" ", currentWordIndex);
     if (nextWordEnd === -1) {
@@ -60,7 +71,7 @@ function slowHorrorMsg(horrorMsg) {
     if (currentWordIndex >= horrorMsg.length) {
       clearInterval(intervalId);
     }
-  }, 1333);
+  }, intervalTime);
 }
 
 

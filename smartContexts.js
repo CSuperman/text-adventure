@@ -1,3 +1,9 @@
+// Often I've seen other developers respect important data such as this
+// only in key scenarios. I'm exploring ways for it to impact the entire game life.
+// Perhaps I can decrease influential complexity once the game grows, 
+// and "new technology" can help me fill out some of the important stateful decisions.
+
+
 const npc = {
     religion: "muslim",
 };

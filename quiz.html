@@ -1,0 +1,105 @@
+// Exploring ways to make the game a meta-quiz for data I can utilize
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz</title>
+<link rel="stylesheet" href="style.css"> </head>
+<body>
+  <div id="question-container">
+    <h2 id="question-text"></h2>
+    <form id="answer-form">
+      <div id="answer-choices"></div>
+      <button type="button" id="next-button">Next</button>
+    </form>
+  </div>
+  <script>
+
+    var state = {
+      score: 0
+    }
+
+    const questions = [
+      {
+        text: "What faction will you choose?",
+        answers: [
+          { text: "Ogres", correct: false, cssChange: "background-color: red;", points: 0 },
+          { text: "Elves", correct: true, points: 1 },
+          { text: "Gnomes", correct: false, points: 0 },
+        ],
+        nextQuestion: {
+          true: 1,
+          false: 0,
+        },
+      },
+      {
+        text: "What shall be your Elven name?",
+        answers: [
+          { text: "Legolego", correct: false, points: 0 },
+          { text: "Legolas", correct: true, cssChange: "background-color: blue;", points: 1 },
+          { text: "Nothing", correct: false, points: 0 },
+        ],
+        nextQuestion: {
+          true: 2,
+          false: 1,
+        },
+      },
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function displayQuestion() {
+      var question = questions[currentQuestionIndex];
+
+      document.getElementById("question-text").textContent = question.text;
+      document.getElementById("answer-choices").innerHTML = "";
+
+      question.answers.forEach((answer, index) => {
+        const radioButton = document.createElement("input");
+        radioButton.type = "radio";
+        radioButton.name = "answer";
+        radioButton.value = index;
+        radioButton.id = `answer-${index}`;
+
+        const label = document.createElement("label");
+        label.htmlFor = `answer-${index}`;
+        label.textContent = answer.text;
+
+        radioButton.addEventListener("change", () => {
+          if (answer.correct) { 
+            state.score += answer.points;
+            currentQuestionIndex = question.nextQuestion.true; 
+            displayQuestion();
+          } else {
+            currentQuestionIndex = question.nextQuestion.false;
+            displayQuestion();
+        });
+
+        if (answer.cssChange) {
+          // Apply CSS change if specified
+          label.style.cssText += answer.cssChange;
+        }
+
+        document.getElementById("answer-choices").appendChild(radioButton);
+        document.getElementById("answer-choices").appendChild(label);
+      });
+    }
+
+    document.getElementById("next-button").addEventListener("click", () => {
+      var question = questions[currentQuestionIndex];
+      var isCorrect = document.querySelector('input[name="answer"]:checked').correct;
+
+      currentQuestionIndex = question.nextQuestion[isCorrect.toString()];
+      if (currentQuestionIndex < questions.length) {
+        displayQuestion(); // Display the next question
+      } else {
+        // Handle quiz completion or any other logic
+        alert("End of Quiz! Your score is: " + state.score);
+      }
+    });
+
+    displayQuestion();
+  </script>
+</body>
+</html>

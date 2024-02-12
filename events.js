@@ -1,29 +1,18 @@
-const events = [
+var events = [
   {
     id: 1,
-    name: "Encounter a monster",
-    conditions: { environment: { timeOfDay: "night" }, identity: { playerLevel: 1 } },
+    name: "Encounter a goblin",
+    conditions: { environment: { timeOfDay: "night" }, identity: { playerLevel: 1 }, thing: { item: false } },
     actions: [
-      { type: "combat", npc: "monster" },
+      { type: "combat", enemy: "goblin" },
     ],
   },
   {
     id: 2,
     name: "Encounter Sesame Street",
-    conditions: { environment: { timeOfDay: "day" }, identity: { playerLevel: 1 } },
+    conditions: { environment: { timeOfDay: "day" }, identity: { playerLevel: 1 }, thing: { item: true } },
     actions: [
       { type: "item", npc: "Snuffalufugus", item: "hug" },
-    ],
-  },
-]
-
-var events = [
-  {
-    id: 1,
-    name: "Encounter a goblin",
-    conditions: { environment: { timeOfDay: "night" }, identity: { playerLevel: 1 }, thing: { item: true } },
-    actions: [
-      { type: "combat", enemy: "goblin" },
     ],
   },
 ]

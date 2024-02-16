@@ -1,6 +1,7 @@
 class Food {
-  constructor(name, statBoost, sideEffect) {
+  constructor(name, color, statBoost, sideEffect) {
     this.name = name;
+    this.color = color;
     this.statBoost = statBoost;
     this.sideEffect = sideEffect;
   }
@@ -18,7 +19,7 @@ class Monster {
     this.effects.push(food.sideEffect);
     console.log(`${this.name} eats the ${food.name}!`);
     console.log(`Stat boost: ${JSON.stringify(food.statBoost)}`);
-    console.log(`Side effect: ${food.sideEffect.name}`);
+    console.log(`Side effect: ${typeof food.sideEffect === 'function' ? food.sideEffect(this) : food.sideEffect.name}`);
   }
 
   dayEnd() {
@@ -37,7 +38,9 @@ class Monster {
   }
 }
 
+
 const foods = [
+  new Food("Eyeball Stew", { color: "yellow" }, { name: "O.M.G. I'm feeling kind of yellow, do I look yellow?" }),
   new Food("Eyeball Stew", { strength: 1 }, { name: "Hallucinations" }),
   new Food("Slime Surprise", { agility: 1 }, { name: "Slippery (Agility penalty)" }),
   new Food("Brain Jello", { intelligence: 1 }, (monster) => console.log(`${monster.name} has a headache! (Intelligence penalty)`)),
